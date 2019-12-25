@@ -4,7 +4,7 @@ function flip() {
 
 const url = '/users';
 
-// post body data 
+// post body dummy data 
 const user = {
 	first_name: 'John',
 	last_name: 'Doe',
