@@ -49,7 +49,6 @@ router.get('/users/:id/avatar', async (req, res) => {
 
 router.post('/users', async (req, res) => {
 	const user = new User(req.body);
-	console.log('AACACACACACAC', req.body)
 
 	try {
 		await user.save()
@@ -92,6 +91,7 @@ router.post('/users/logout', auth, async (req, res) => {
 router.post('/users/logoutAll', auth, async (req, res) => {
 	try {
 		req.user.tokens = [];
+		console.log(req.user.tokens)
 		await req.user.save();
 		res.send()
 	} catch (e) {

@@ -1,4 +1,3 @@
-
 function flip() {
 	$('.book-card, .register-card').toggleClass('flipped');
 }
@@ -7,8 +6,9 @@ const url = '/users';
 
 // post body data 
 const user = {
-	email: 'Doe',
-	password: 'Blogger'
+	first_name: 'John',
+	last_name: 'Doe',
+	job_title: 'Blogger'
 };
 
 // request options
@@ -19,6 +19,7 @@ const options = {
 		'Content-Type': 'application/json'
 	}
 }
+
 const submit = document.querySelector('#newUser')
 submit.addEventListener('click', (e) => {
 	e.preventDefault();
