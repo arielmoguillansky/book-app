@@ -6,9 +6,9 @@ const url = '/users';
 
 // post body dummy data 
 const user = {
-	first_name: 'John',
-	last_name: 'Doe',
-	job_title: 'Blogger'
+	name: 'John',
+	email: 'j@a.com',
+	password: 'Blogger12345'
 };
 
 // request options

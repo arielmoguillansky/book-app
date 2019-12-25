@@ -48,6 +48,7 @@ router.get('/users/:id/avatar', async (req, res) => {
 })
 
 router.post('/users', async (req, res) => {
+	console.log('EEEEEENTROO', req.body)
 	const user = new User(req.body);
 
 	try {
