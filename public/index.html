@@ -8,24 +8,25 @@
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
 		integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 	<link rel="stylesheet" href="bookStyle.css">
+	<link rel="icon" href="/img/bookApp.ico">
 </head>
 
 <body>
 
 	<div class="custom-container">
-		<div class="register-card-container">
+		<div class="register-card-container register-card-start">
 			<button class="sign-up" onclick="flip()">Register</button>
 			<button class="login" onclick="flip()">Log In</button>
 			<div class="register-card">
 				<div class="front">
 					<span class="c-custom-white login-title">Log in</span>
 					<div class="c-custom-white book-form">
-						<form action="">
-							<label for="user">User:
-								<input type="text" name="user">
+						<form class="log-in">
+							<label for="userEmail">Email:
+								<input type="text" name="userEmail">
 							</label>
-							<label for="Name">Password:
-								<input type="password" name="password">
+							<label for="password">Password:
+								<input type="password" name="userPassword">
 							</label>
 						</form>
 						<button class="submit-login">Check me in</button>
@@ -34,11 +35,14 @@
 				<div class="back">
 					<span class="c-custom-white signUp-title">Sign up</span>
 					<div class="c-custom-white book-form">
-						<form class="sing-in">
-							<label for="user">E-mail:
+						<form class="sign-in">
+							<label for="name">Name:
+								<input type="text" name="name">
+							</label>
+							<label for="email">E-mail:
 								<input type="text" name="email">
 							</label>
-							<label for="Name">Password:
+							<label for="password">Password:
 								<input type="password" name="password">
 							</label>
 						</form>
@@ -46,46 +50,373 @@
 					</div>
 				</div>
 			</div>
+			<div class="errorMsg c-custom-white d-none">
+				<svg class="line-1" xmlns="http://www.w3.org/2000/svg" viewbox="0 -6 200 200">
+					<path d="M 0 50 A 200 150 0 0 1 150 100" />
+				</svg>
+				<svg class="line-2" xmlns="http://www.w3.org/2000/svg" viewbox="0 -6 200 200">
+					<path d="M 0 50 A 200 150 0 0 0 150 0" />
+				</svg>
+				<span>Invalid email <br> or <br>password</span>
+			</div>
+		</div>
+
+		<div class="main-content">
+
+			<div class="main-card">
+				<button class="c-custom-white log-out-btn d-none">Log out</button>
+				<div class="user-card-container d-none">
+					<div class="user-card">
+						<div class="front c-custom-white">
+							<div class="avatar-content">
+								<div class="avatar"></div>
+								<span class="user-name"></span>
+								<span class="user-email"></span>
+							</div>
+							<div class="profile-content">
+								<div class="book-form">
+									<div class="books-info">
+										<span>Books Readed:</span>
+										<span class="readed-books"></span>
+									</div>
+									<div class="books-info">
+										<span>Books Paused:</span>
+										<span class="paused-books"></span>
+									</div>
+									<div class="books-info">
+										<span>Total Books:</span>
+										<span class="total-books"></span>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="arrow-container d-none arrow-right">
+				<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -5 150 150">
+					<path class="arrow"
+						d="M96.1,72.2a14.5,14.5,0,0,0,0-20.4L48.8,4.5C43.3-1,34.2-1.6,28.5,3.7A14.5,14.5,0,0,0,28,24.6L58.3,55a10,10,0,0,1,0,14.1L28,99.4a14.4,14.4,0,0,0,.5,20.9c5.7,5.3,14.8,4.8,20.3-.8Z" />
+				</svg>
+
+			</div>
+
+			<div class="main-card cards-display scrollbar">
+				<ul class="grid">
+					<li>
+						<div class="card-container new-card-container d-none" data-id="newCard">
+							<span class="add-icon c-custom-white">+</span>
+						</div>
+					</li>
+					<li>
+						<div class="card-container d-none" data-id="card-2">
+							<div class="book-card" onclick="flip()">
+								<div class="front">
+									<div class="c-custom-white book-form">
+										<div class="section">
+											<h1>El León, la Bruja y el ropero</h1>
+										</div>
+										<hr class="c-custom-white">
+										<div class="section">
+											<h2>Author:</h2>
+											<span>C.S Lewis</span>
+										</div>
+										<div class="section">
+											<h2>Category:</h2>
+											<span>Novel</span>
+										</div>
+										<div class="section">
+											<h2>Editorial:</h2>
+											<span>Smtheig</span>
+										</div>
+										<div>
+											<h2>Overwiew:</h2>
+											<p class="scrollbar">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Unde, quis beatae
+												aliquid?
+												Ex possimus eius distinctio, unde autem, esse suscipit nam iure quaerat, consectetur
+												necessitatibus
+												sit,
+												vitae exercitationem explicabo quam.</p>
+										</div>
+
+										<div class="section">
+											<h2>Page mark:</h2>
+											<span>254</span>
+										</div>
+									</div>
+								</div>
+								<div class="back">
+									<span class="no-cover c-custom-white">Book Cover</span>
+								</div>
+							</div>
+						</div>
+					</li>
+					<li>
+						<div class="card-container d-none" data-id="card-2">
+							<div class="book-card" onclick="flip()">
+								<div class="front">
+									<div class="c-custom-white book-form">
+										<div class="section">
+											<h1>El León, la Bruja y el ropero</h1>
+										</div>
+										<hr class="c-custom-white">
+										<div class="section">
+											<h2>Author:</h2>
+											<span>C.S Lewis</span>
+										</div>
+										<div class="section">
+											<h2>Category:</h2>
+											<span>Novel</span>
+										</div>
+										<div class="section">
+											<h2>Editorial:</h2>
+											<span>Smtheig</span>
+										</div>
+										<div>
+											<h2>Overwiew:</h2>
+											<p class="scrollbar">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Unde, quis beatae
+												aliquid?
+												Ex possimus eius distinctio, unde autem, esse suscipit nam iure quaerat, consectetur
+												necessitatibus
+												sit,
+												vitae exercitationem explicabo quam.</p>
+										</div>
+
+										<div class="section">
+											<h2>Page mark:</h2>
+											<span>254</span>
+										</div>
+									</div>
+								</div>
+								<div class="back">
+									<span class="no-cover c-custom-white">Book Cover</span>
+								</div>
+							</div>
+						</div>
+					</li>
+					<li>
+						<div class="card-container d-none">
+							<div class="book-card" onclick="flip()">
+								<div class="front">
+									<div class="c-custom-white book-form">
+										<div class="section">
+											<h1>El León, la Bruja y el ropero</h1>
+										</div>
+										<hr class="c-custom-white">
+										<div class="section">
+											<h2>Author:</h2>
+											<span>C.S Lewis</span>
+										</div>
+										<div class="section">
+											<h2>Category:</h2>
+											<span>Novel</span>
+										</div>
+										<div class="section">
+											<h2>Editorial:</h2>
+											<span>Smtheig</span>
+										</div>
+										<div>
+											<h2>Overwiew:</h2>
+											<p class="scrollbar">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Unde, quis beatae
+												aliquid?
+												Ex possimus eius distinctio, unde autem, esse suscipit nam iure quaerat, consectetur
+												necessitatibus
+												sit,
+												vitae exercitationem explicabo quam.</p>
+										</div>
+
+										<div class="section">
+											<h2>Page mark:</h2>
+											<span>254</span>
+										</div>
+									</div>
+								</div>
+								<div class="back">
+									<span class="no-cover c-custom-white">Book Cover</span>
+								</div>
+							</div>
+						</div>
+					</li>
+					<li>
+						<div class="card-container d-none" data-id="card-3">
+							<div class="book-card" onclick="flip()">
+								<div class="front">
+									<div class="c-custom-white book-form">
+										<div class="section">
+											<h1>El León, la Bruja y el ropero</h1>
+										</div>
+										<hr class="c-custom-white">
+										<div class="section">
+											<h2>Author:</h2>
+											<span>C.S Lewis</span>
+										</div>
+										<div class="section">
+											<h2>Category:</h2>
+											<span>Novel</span>
+										</div>
+										<div class="section">
+											<h2>Editorial:</h2>
+											<span>Smtheig</span>
+										</div>
+										<div>
+											<h2>Overwiew:</h2>
+											<p class="scrollbar">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Unde, quis beatae
+												aliquid?
+												Ex possimus eius distinctio, unde autem, esse suscipit nam iure quaerat, consectetur
+												necessitatibus
+												sit,
+												vitae exercitationem explicabo quam.</p>
+										</div>
+
+										<div class="section">
+											<h2>Page mark:</h2>
+											<span>254</span>
+										</div>
+									</div>
+								</div>
+								<div class="back">
+									<span class="no-cover c-custom-white">Book Cover</span>
+								</div>
+							</div>
+						</div>
+					</li>
+					<li>
+						<div class="card-container d-none">
+							<div class="book-card" onclick="flip()">
+								<div class="front">
+									<div class="c-custom-white book-form">
+										<div class="section">
+											<h1>El León, la Bruja y el ropero</h1>
+										</div>
+										<hr class="c-custom-white">
+										<div class="section">
+											<h2>Author:</h2>
+											<span>C.S Lewis</span>
+										</div>
+										<div class="section">
+											<h2>Category:</h2>
+											<span>Novel</span>
+										</div>
+										<div class="section">
+											<h2>Editorial:</h2>
+											<span>Smtheig</span>
+										</div>
+										<div>
+											<h2>Overwiew:</h2>
+											<p class="scrollbar">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Unde, quis beatae
+												aliquid?
+												Ex possimus eius distinctio, unde autem, esse suscipit nam iure quaerat, consectetur
+												necessitatibus
+												sit,
+												vitae exercitationem explicabo quam.</p>
+										</div>
+
+										<div class="section">
+											<h2>Page mark:</h2>
+											<span>254</span>
+										</div>
+									</div>
+								</div>
+								<div class="back">
+									<span class="no-cover c-custom-white">Book Cover</span>
+								</div>
+							</div>
+						</div>
+					</li>
+					<li>
+						<div class="card-container d-none">
+							<div class="book-card" onclick="flip()">
+								<div class="front">
+									<div class="c-custom-white book-form">
+										<div class="section">
+											<h1>El León, la Bruja y el ropero</h1>
+										</div>
+										<hr class="c-custom-white">
+										<div class="section">
+											<h2>Author:</h2>
+											<span>C.S Lewis</span>
+										</div>
+										<div class="section">
+											<h2>Category:</h2>
+											<span>Novel</span>
+										</div>
+										<div class="section">
+											<h2>Editorial:</h2>
+											<span>Smtheig</span>
+										</div>
+										<div>
+											<h2>Overwiew:</h2>
+											<p class="scrollbar">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Unde, quis beatae
+												aliquid?
+												Ex possimus eius distinctio, unde autem, esse suscipit nam iure quaerat, consectetur
+												necessitatibus
+												sit,
+												vitae exercitationem explicabo quam.</p>
+										</div>
+
+										<div class="section">
+											<h2>Page mark:</h2>
+											<span>254</span>
+										</div>
+									</div>
+								</div>
+								<div class="back">
+									<span class="no-cover c-custom-white">Book Cover</span>
+								</div>
+							</div>
+						</div>
+					</li>
+					<li>
+						<div class="card-container d-none">
+							<div class="book-card" onclick="flip()">
+								<div class="front">
+									<div class="c-custom-white book-form">
+										<div class="section">
+											<h1>El León, la Bruja y el ropero</h1>
+										</div>
+										<hr class="c-custom-white">
+										<div class="section">
+											<h2>Author:</h2>
+											<span>C.S Lewis</span>
+										</div>
+										<div class="section">
+											<h2>Category:</h2>
+											<span>Novel</span>
+										</div>
+										<div class="section">
+											<h2>Editorial:</h2>
+											<span>Smtheig</span>
+										</div>
+										<div>
+											<h2>Overwiew:</h2>
+											<p class="scrollbar">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Unde, quis beatae
+												aliquid?
+												Ex possimus eius distinctio, unde autem, esse suscipit nam iure quaerat, consectetur
+												necessitatibus
+												sit,
+												vitae exercitationem explicabo quam.</p>
+										</div>
+
+										<div class="section">
+											<h2>Page mark:</h2>
+											<span>254</span>
+										</div>
+									</div>
+								</div>
+								<div class="back">
+									<span class="no-cover c-custom-white">Book Cover</span>
+								</div>
+							</div>
+						</div>
+					</li>
+
+
+				</ul>
+			</div>
+
 		</div>
 	</div>
-
-	<!--<div class="custom-container">
-    <div class="card-container">
-      <div class="book-card" onclick="flip()">
-        <div class="front">
-           <div class="c-custom-white book-form">
-            <div class="section"><h1>El León, la Bruja y el ropero</h1></div>
-            <hr class="c-custom-white">
-            <div class="section">
-              <h2>Author:</h2>
-              <span>C.S Lewis</span>
-            </div> 
-            <div class="section">
-              <h2>Category:</h2>
-              <span>Novel</span>
-            </div>
-            <div class="section">
-              <h2>Editorial:</h2>
-              <span>Smtheig</span>
-            </div>
-            <div>
-              <h2>Overwiew:</h2>
-              <p class="scrollbar">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Unde, quis beatae aliquid? Ex possimus eius distinctio, unde autem, esse suscipit nam iure quaerat, consectetur necessitatibus sit, vitae exercitationem explicabo quam.</p>
-            </div>
-                 
-            <div class="section">
-              <h2>Page mark:</h2>
-              <span>254</span>
-            </div>
-         </div>
-        </div>
-        <div class="back">
-          <span class="no-cover c-custom-white">Book Cover</span>
-        </div>
-      </div>
-    </div>
-  </div>-->
-
 
 	<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
 		integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"

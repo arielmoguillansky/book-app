@@ -7,6 +7,10 @@
 	src:url('./font/zai_RoyalVogueTypewriter1929.ttf');
 }
 
+body {
+    overflow: hidden;
+}
+
 .c-custom-white{
 	color:#F0EFE2;
 }
@@ -15,17 +19,18 @@
 	background-color: #1d4e89;
 	width: 100vw;
 	height: 100vh;
-	display: flex;
+	/*display: flex;
 	flex-direction: row;
 	justify-content: center;
-	align-items: center;
+	align-items: center;*/
 	padding: 0;
 	margin:0;
+    overflow: hidden;
 }
 
 .card-container {
-    width: 309px;
-    height: 500px;
+    width: 247px;
+    height: 400px;
     -webkit-perspective: 800px;
     -moz-perspective: 800px;
     -o-perspective: 800px;
@@ -33,7 +38,15 @@
     transition: all 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
 }
 
-.book-card {
+.user-card-container {
+    position: absolute;
+    width: 500px;
+    height: 309px;
+    /*transition: all 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);*/
+    transform: rotate(90deg) translate(-50vw,75vw) scale(1.1);
+}
+
+.book-card, .user-card {
 	background-color: #1d4e89;
     width: 100%;
     height: 100%;
@@ -57,6 +70,12 @@
     -moz-perspective: 800px;
     -o-perspective: 800px;
     perspective: 800px;
+        position: absolute;
+    margin: auto;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
 }
 
 .register-card {
@@ -83,7 +102,7 @@
     width: 8em;
     height: 2.3em;
     top: -37px;
-    left: -4px;
+    left: -5px;
     z-index: 100;
 	background-image: url("https://www.transparenttextures.com/patterns/binding-dark.png");	
 	background-color: #1d4e89;
@@ -142,7 +161,7 @@
     opacity: 1;
 }
 
-.book-card .front, .book-card .back, .register-card .front, .register-card .back  {
+.book-card .front, .book-card .back, .register-card .front, .register-card .back, .user-card .front  {
     display: block;
     height: 100%;
     width: 100%;
@@ -153,7 +172,7 @@
     backface-visibility: hidden;
 }
 
-.book-card .front, .register-card .front {
+.book-card .front, .register-card .front, .user-card .front {
 	background-image: url("https://www.transparenttextures.com/patterns/binding-dark.png");	
 	border-radius: 8px;
 	border: .3em solid #F0EFE2;
@@ -188,11 +207,6 @@
   bottom: 0;
   border: .25em solid #1d4e89;
   border-radius: 8px;
-}
-
-.card-container:hover {
-  -webkit-transform: scale(1.25, 1.25);
-  transform: scale(1.25, 1.25);
 }
 
 .book-card.flipped, .register-card.flipped {
@@ -314,7 +328,6 @@ hr.c-custom-white:after {
     transform: rotateY( 180deg );
 	/*background-image: url("./icon/narnia.jpg");	*/
 	background-image: url("https://www.transparenttextures.com/patterns/binding-dark.png");	
-	background-size: cover;
 	border-radius: 8px 0 8px 8px;
 	border: .3em solid #e7e6d1;
 	display: flex;
@@ -324,12 +337,25 @@ hr.c-custom-white:after {
 	position: absolute;
     right: 10px;
     top: -36px;
+    visibility: hidden;
+    opacity: 0;
+    animation: fadeIn 2s ease 2.5s forwards;
 }
 
 .login {
 	position: absolute;
     left: 10px;
     top: -36px;
+    animation: fadeIn 2s ease 2.5s forwards;
+    opacity: 0;
+    visibility: hidden;
+}
+
+@keyframes fadeIn {
+    100% {
+        opacity: 1;
+        visibility: visible;
+    }
 }
 
 .login-title {
@@ -366,7 +392,7 @@ input {
   text-align: center;
   text-decoration: none;
   font-size: 1.5em;
-  		font-family: 'Rumble Brave';
+  font-family: 'Rumble Brave';
   }
 
 input:focus,
@@ -376,13 +402,224 @@ button:focus {
     outline: none;
 }
 
-.submit-login {
-
-}
-
 input:-webkit-autofill,
 input:-webkit-autofill:hover, 
 input:-webkit-autofill:focus, 
 input:-webkit-autofill:active  {
     -webkit-box-shadow: 0 0 0 30px #1d4e89 inset !important;
 }
+
+.submit-login {
+    margin-bottom: -14px;
+}
+
+.errorMsg{
+    position: absolute;
+    right: -214px;
+    top: 100px;
+    width: auto;
+    text-align: center;
+}
+
+.errorMsg path {
+    stroke: #F0EFE2;
+    stroke-width: .3em;
+    fill: none;
+}
+
+.errorMsg .line-1 {
+    width: 150px;
+    height: 100px;
+    position: absolute;
+    right: 62px;
+    top: -66px;
+}
+
+.errorMsg .line-2 {
+    width: 150px;
+    height: 100px;
+    position: absolute;
+    right: 62px;
+    top: 86px;
+}
+
+.errorMsg span {
+    width: 150px;
+    margin: 0;
+    font-size: .8em;
+}
+
+.card-out {
+    animation: goOut 2s ease forwards;
+}
+
+.card-in {
+    animation: goIn 2s ease 2s forwards;
+}
+
+.register-card-start{
+  transform:rotate(-90deg) translate(-50vw,80vw);
+  animation: goIn 2s ease-out .5s forwards;
+}
+
+@keyframes goOut {
+    50% {
+        transform: scale(1.1);
+        box-shadow: 0 13px 27px -5px rgba(50,50,93,.25), 0 8px 16px -8px rgba(0,0,0,.3), 0 -6px 16px -6px rgba(0,0,0,1);
+    }
+    100% {
+        transform: rotate(90deg) translate(-50vw,80vw);
+    }
+}
+
+@keyframes goIn {
+    50% {
+        transform: rotate(90deg) translate(0vw,0vw);
+        transform: scale(1.1);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+.avatar-content {
+     width: 50%;
+    height: 100%;
+    float: left;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.profile-content {
+     width: 50%;
+    height: 100%;
+    float: right;
+}
+
+.avatar {
+    width: 150px;
+    height: 150px;
+    border-radius: 80px;
+    border: .5em solid #F0EFE2;
+    background-size: cover;
+}
+
+.user-name {
+    text-align: center;
+    margin-left: unset;
+}
+
+.arrow-container {
+    width: 75px;
+    position: absolute;
+    right: 5vw;
+    visibility: hidden;
+    opacity: 0;
+    animation: arrow 1s linear 3s forwards;
+}
+
+@keyframes arrow {
+100% {
+    visibility: visible;
+    opacity: 1;
+}
+}
+
+.main-content {
+    width: 200%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    height: 100%;
+}
+
+.main-card {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    height: 100%;
+    align-items: center;
+    transition: transform 1s ease-out;
+}
+
+.arrow {
+     fill: transparent;    
+     stroke: #F0EFE2;
+     stroke-width: .25em;
+     cursor: pointer;
+}
+
+.moveToLeft {
+    transform: translateX(-100%);
+}
+
+.arrow-left {
+    transform: rotate(180deg) translateX(85vw);
+    opacity: 0;
+    animation: leftArrow 1s ease forwards 2s;
+    cursor: pointer;
+    z-index: 100;
+}
+
+@keyframes leftArrow {
+    100%{
+        opacity: 1;
+        visibility: visible;
+    }
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    grid-gap: 1em;
+    list-style: none;
+    margin: unset;
+}
+
+.cards-display {
+    overflow-y: scroll;
+    display: flex;
+    align-items: baseline;
+    padding: 2em 0;
+}
+
+.log-out-btn {
+    position: absolute;
+    top: 9.5em;
+    left: 11em;
+    visibility: hidden;
+    opacity: 0;
+    animation: arrow 1s linear 3s forwards;
+    cursor: pointer;
+    z-index: 100;
+}
+
+.new-card-container {
+    border: .3em solid #F0EFE2;
+    border-radius: .5em;
+    border-style: dashed;
+}
+
+.add-icon {
+    font-size: 1em;
+}
+
+.add-icon:hover {
+    transform: scale(1.1,1.1);
+}
+
+.card-container:not(.new-card-container):hover {
+  -webkit-transform: scale(1.05, 1.05);
+  transform: scale(1.05, 1.05);
+}
+
+
+@media (max-width: 920px) {
+.errorMsg, .arrow-container {
+    display: none;
+}
+}
+

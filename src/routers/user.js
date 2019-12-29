@@ -19,7 +19,7 @@ const upload = multer({
 
 
 router.post('/users/dashboard/avatar', auth, upload.single('avatar'), async (req, res) => {
-	const buffer = await sharp(req.file.buffer).resize({ width: 250, height: 250 }).png().toBuffer()
+	const buffer = await sharp(req.file.buffer).resize({ width: 150, height: 150 }).png().toBuffer()
 
 	req.user.avatar = buffer;
 	await req.user.save();
@@ -48,7 +48,7 @@ router.get('/users/:id/avatar', async (req, res) => {
 })
 
 router.post('/users', async (req, res) => {
-	console.log('EEEEEENTROO', req.body)
+
 	const user = new User(req.body);
 
 	try {
@@ -83,7 +83,7 @@ router.post('/users/logout', auth, async (req, res) => {
 			return token.token !== req.token
 		})
 		await req.user.save();
-		res.send();
+		res.sendStatus(200);
 	} catch (e) {
 		res.status(500).send(e);
 	}

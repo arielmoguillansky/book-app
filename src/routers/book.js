@@ -88,6 +88,7 @@ router.get('/books', auth, async (req, res) => {
 			}
 		}).execPopulate();
 		res.send(req.user.books);
+
 	} catch (e) {
 		res.status(500).send(e);
 	}
