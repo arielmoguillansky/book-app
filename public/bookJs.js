@@ -11,6 +11,7 @@ document.querySelectorAll('.book-card').forEach(item => {
 const postUserUrl = '/users';
 const getUserUrl = '/users/login';
 const getUserProfileUrl = '/users/dashboard';
+const uploadAvatarUrl = '/users/dashboard/avatar';
 const getBooksUrl = '/books';
 const logOutUrl = 'users/logout';
 let token;
@@ -108,6 +109,17 @@ const logOutOptions = (token) => {
 	}
 }
 
+const uploadAvatarOptions = (token, formData) => {
+	return {
+		method: 'POST',
+		body: formData,
+		headers: {
+			//'Content-Type': 'multipart/form-data',
+			'Authorization': token
+		}
+	}
+}
+
 function handleErrors(response) {
 	if (!response.ok) {
 		return document.querySelector('.errorMsg').classList.remove('d-none');
@@ -122,8 +134,14 @@ signin.addEventListener('click', (e) => {
 	e.preventDefault();
 
 	fetch(postUserUrl, singInOptions())
-		.then(res => res.json())
-		.then(res => console.log(res));
+		.then(res => res.json().then((data) => {
+			window.localStorage.setItem('access_token', data.token);
+			token = 'Bearer ' + data.token;
+			outCard(getDashboard());
+			getUserData(token);
+			getBooksData(token);
+		}))
+
 })
 
 const userDataOptions = (token) => {
@@ -173,6 +191,34 @@ function getBooksData(token) {
 		}))
 }
 
+function openFileAvatar() {
+	document.querySelector('#avatarImg').click();
+}
+
+function uploadImg(event) {
+
+	let input = event.target;
+
+	let reader = new FileReader();
+
+	reader.onload = () => {
+		let dataURL = reader.result;
+		let avatarPreview = document.getElementById('avatarPreview');
+		avatarPreview.classList.remove('d-none')
+		avatarPreview.src = dataURL;
+	}
+	reader.readAsDataURL(input.files[0]);
+	if (input) {
+		document.querySelector('.cam-icon-edit').classList.remove('d-none')
+	}
+	const formData = new FormData()
+	formData.append('avatar', document.querySelector('input[name="avatar"]').files[0])
+
+	fetch(uploadAvatarUrl, uploadAvatarOptions(token, formData))
+		.then(res => console.log(res))
+		.catch(e => console.log(e))
+}
+
 function getUserData(token) {
 
 	fetch(getUserProfileUrl, userDataOptions(token))
@@ -181,8 +227,17 @@ function getUserData(token) {
 				document.querySelector('.user-name').textContent = data.name;
 				document.querySelector('.user-email').textContent = data.email;
 				let avatar = document.querySelector('.avatar')
-				avatar.style.backgroundImage = "url(data:image/png;base64," + data.avatar;
+				if (!data.avatar) {
+					document.querySelector('.cam-icon').classList.remove('d-none');
+				} else {
+					avatar.style.backgroundImage = "url(data:image/png;base64," + data.avatar;
+					document.querySelector('.cam-icon-edit').classList.remove('d-none');
+				}
+				arrowRight();
 			}))
+		.catch((e) => {
+			console.log(e)
+		})
 }
 
 function logOutUser(token) {
@@ -211,7 +266,6 @@ login.addEventListener('click', (e) => {
 			getUserData(token);
 			getBooksData(token);
 		}))
-		.then(arrowRight())
 		.catch((e) => {
 			console.log(e)
 		})
@@ -225,5 +279,15 @@ logout.addEventListener('click', (e) => {
 	e.preventDefault();
 
 	logOutUser(token);
+
+})
+
+document.querySelector('.add-icon').addEventListener('click', (e) => {
+	document.querySelector('.new-book-container').classList.toggle('d-none')
+	document.querySelectorAll('.main-card')[0].classList.toggle('moveToNewBook');
+	document.querySelectorAll('.main-card')[1].classList.toggle('moveToNewBook');
+	document.querySelectorAll('.main-card')[2].classList.toggle('moveToNewBook');
+	document.querySelector('.cards-display').style.overflow = "hidden";
+	//document.querySelector('.arrow-container').classList.toggle('d-none');
 
 })
