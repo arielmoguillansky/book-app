@@ -231,6 +231,12 @@ h2 {
     font-family: 'Zai';
     opacity: .7;
 }
+.new-book-card label{
+    font-size: .6em;
+	margin:unset;
+	line-height: unset;
+    font-family: 'Zai';
+}
 
 .book-form {
 	width: 100%;
@@ -688,6 +694,62 @@ input:-webkit-autofill:active  {
     perspective: 800px;
     transition: all 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
     transform: scale(1.5);
+}
+
+.add-cover-btn {
+	position: absolute;
+    right: 10px;
+    top: -36px;
+    visibility: hidden;
+    opacity: 0;
+    animation: fadeIn 2s ease 2.5s forwards;
+    font-size: 1em;
+    width: 35%;
+    top: 18px;
+    right: -103px;
+}
+
+.new-book-card input {
+    opacity: 1;
+}
+
+.new-book-card input {
+    width: 50%;
+}
+
+input[name="newTitle"] {
+    font-family: 'Rumble Brave';
+    font-size: 2em;
+    margin: unset;
+    width: 100%;
+}
+
+textarea {
+  resize: none;
+  overflow: auto;
+  color: #F0EFE2;
+  background-color: transparent;
+  width: 100%;
+  height: 100px;
+}
+
+::-webkit-input-placeholder { /* Edge */
+  color: #F0EFE2;
+  text-align: center;
+}
+
+:-ms-input-placeholder { /* Internet Explorer */
+  color: #F0EFE2;
+  text-align: center;
+}
+
+::placeholder {
+  color: #F0EFE2;
+  text-align: center;
+}
+
+.paused-input {
+    visibility: hidden;
 }
 
 @media (max-width: 920px) {

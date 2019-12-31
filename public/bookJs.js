@@ -1,5 +1,6 @@
 function flip() {
-	$('.register-card').toggleClass('flipped');
+	document.querySelector('.register-card').classList.toggle('flipped');
+	document.querySelector('.new-book-card').classList.toggle('flipped');
 }
 
 document.querySelectorAll('.book-card').forEach(item => {
@@ -291,3 +292,12 @@ document.querySelector('.add-icon').addEventListener('click', (e) => {
 	//document.querySelector('.arrow-container').classList.toggle('d-none');
 
 })
+
+document.querySelector('input[name="cbox1"]').onclick = function () {
+
+	if (this.checked) {
+		document.querySelector('.paused-input').style.visibility = "visible";
+	} else {
+		document.querySelector('.paused-input').style.visibility = "hidden";
+	}
+}

@@ -446,46 +446,42 @@
 
 					<li>
 						<div class="new-book-container d-none">
-							<div class="new-book-card" onclick="flip()">
+							<button class="add-cover-btn" onclick="flip()">Click to add Book Cover</button>
+							<div class="new-book-card">
 								<div class="front">
 									<div class="c-custom-white book-form">
-										<label for="newTitle">Email:
-											<input type="text" name="newTitle">
+										<label for="newTitle">
+											<input type="text" placeholder="Book Title" name="newTitle">
 										</label>
-										<hr class="c-custom-white">
 										<div class="section">
-											<h2>Author:</h2>
-											<label for="newAuthor">Email:
+											<label for="newAuthor">Author:
 												<input type="text" name="newAuthor">
 											</label>
 										</div>
 										<div class="section">
-											<h2>Category:</h2>
-											<label for="newCat">Email:
+											<label for="newCat">Category:
 												<input type="text" name="newCat">
 											</label>
 										</div>
 										<div class="section">
-											<h2>Editorial:</h2>
-											<label for="newEdit">Email:
+											<label for="newEdit">Editorial:
 												<input type="text" name="newEdit">
 											</label>
 										</div>
 										<div>
-											<h2>Overwiew:</h2>
-											<label for="newOverview">Email:
-												<textarea name="newOverview" cols="30" rows="10"></textarea>
+											<label for="newOverview">Overview:
+												<textarea class="scrollbar" name="newOverview" cols="30" rows="10"></textarea>
 											</label>
 										</div>
-										<div class="section">
-											<label for="cbox1">Reading:
-												<input type="checkbox" name="cbox1" value="paused">
+										<div class="sectioncheck">
+											<label for="cbox1">
+												<input type="checkbox" name="cbox1" value="finished">
+												Reading
 											</label>
 										</div>
-										<div class="section">
-											<h2>Page mark:</h2>
-											<label for="newPageMark">Email:
-												<input type="text" name="newPageMark">
+										<div class="section paused-input">
+											<label for="newPageMark">Page Mark:
+												<input type="text" name="newPageMark" disabled>
 											</label>
 										</div>
 									</div>
