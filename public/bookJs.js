@@ -185,23 +185,36 @@ const booksDataOptions = (token) => {
 		}
 	}
 }
-let imgObj = []
+
 const getBooksCards = (data) => {
 	let siblingDom = document.querySelector('.new-book-li');
 	let status, bookCover, base64data;
 
 	if (data.length > 0) {
 
-		for (let i = 0; i < data.length; i++) {
+		function recorrerData(data, pos) {
 
-			if (data[i].readed) {
+			function seguir() {
+				if (pos + 1 < data.length) recorrerData(data, pos + 1);
+			}
+
+			function crearSibiling(data) {
+				let parser = new DOMParser();
+				let domString = '<li class="book-card-li"><div class="card-container"><div class="book-card"><div class="front"><div class="c-custom-white book-form"><div class="section section-title"><h1>' + data.bookTitle + '</h1></div><hr class="c-custom-white"><div class="section"><h2>Author:</h2><span>' + data.author + '</span></div><div class="section"><h2>Category:</h2><span>' + data.category + '</span></div><div class="section"><h2>Editorial:</h2><span>' + data.editorial + '</span></div><div><h2>Overwiew:</h2><p class="scrollbar">' + data.overview + '</p></div>' + status + '</div></div>' + bookCover + '</div></div></li>';
+				let html = parser.parseFromString(domString, 'text/html')
+				siblingDom.insertAdjacentHTML('afterend', domString);
+
+
+			}
+
+			if (data[pos].readed) {
 				status = '<div class="section completed-section"><h2 class="completed-msg">Completed</h2></div>';
 			} else {
 				status = '<div class="section"><h2>Page mark:</h2><span>' + data[i].lastPageReaded + '</span></div>';
 			}
 
-			if (data[i].bookCover) {
-				let id = data[i]._id;
+			if (data[pos].bookCover.data.length > 0) {
+				let id = data[pos]._id;
 				fetch('/books/' + id + '/bookCover', bookCoverOptions(token))
 					.then((res) => { return res.blob() }).then(blob => {
 						let reader = new FileReader();
@@ -209,62 +222,36 @@ const getBooksCards = (data) => {
 						reader.onload = function () {
 							base64data = reader.result;
 							bookCover = '<div class="back" style="background-image:url(' + base64data + '"></div>';
+							crearSibiling(data[pos]);
+							seguir()
 						}
 					})
 
 			} else {
 				bookCover = '<div class="back"><span class="no-cover c-custom-white">Book Cover</span></div></div>';
+				crearSibiling(data[pos]);
+				seguir()
 			}
 
-			let parser = new DOMParser();
-			let domString = '<li><div class="card-container"><div class="book-card"><div class="front"><div class="c-custom-white book-form"><div class="section section-title"><h1>' + data[i].bookTitle + '</h1></div><hr class="c-custom-white"><div class="section"><h2>Author:</h2><span>' + data[i].author + '</span></div><div class="section"><h2>Category:</h2><span>' + data[i].category + '</span></div><div class="section"><h2>Editorial:</h2><span>' + data[i].editorial + '</span></div><div><h2>Overwiew:</h2><p class="scrollbar">' + data[i].overview + '</p></div>' + status + '</div></div>' + bookCover + '</div></div></li>';
-			let html = parser.parseFromString(domString, 'text/html')
-			siblingDom.insertAdjacentHTML('afterend', domString)
 		}
+
+		recorrerData(data, 0)
+	}
+	setTimeout(() => {
 		document.querySelectorAll('.book-card').forEach(item => {
 			item.addEventListener('click', event => {
 				item.classList.toggle('flipped');
 			})
 		})
-	}
+	}, 2000)
+
+
 }
 
-// const getBooksCover = (data) => {
-// 	document.querySelector('.grid').classList.remove('new-grid')
-// 	if (data.length > 0) {
-// 		for (let i = 0; i < data.length; i++) {
-// 			if (data[i].bookCover) {
-// 				let id = data[i]._id;
-// 				fetch('/books/' + id + '/bookCover', bookCoverOptions(token))
-// 					.then((res) => { return res.blob() }).then(blob => {
-// 						let reader = new FileReader();
-// 						reader.readAsDataURL(blob);
-// 						reader.onload = async function () {
-// 							base64data = reader.result;
-// 							await imgObj.push[base64data]
-// 						}
-// 					})
-// 			} else {
-// 				getBooksCards(data)
-// 			}
-// 		}
-// 		// buffImg = data[i].bookCover.data;
-// 		// let base64data;
-// 		// let blob = new Blob([buffImg], { type: 'image/png' }); // pass a useful mime type here
-
-// 		// let reader = new FileReader();
-// 		// reader.readAsDataURL(blob);
-// 		// reader.onload = async function () {
-// 		// 	base64data = reader.result;
-// 		// 	await getBooksCards(data, base64data)
-// 		// }
-// 	} else {
-// 		document.querySelector('.grid').classList.add('new-grid')
-// 	}
-
-// }
-
 function getBooksData(token) {
+	document.querySelectorAll('.book-card-li').forEach(function (a) {
+		a.remove()
+	})
 	fetch(getBooksUrl, booksDataOptions(token))
 		.then(res => res.json().then((data) => {
 			console.log(data);
@@ -282,7 +269,6 @@ function getBooksData(token) {
 			document.querySelector('.paused-books').textContent = pausedBook;
 
 			getBooksCards(data);
-
 
 		}))
 }
@@ -456,7 +442,7 @@ const createNewBook = document.querySelector('.submit-book').addEventListener('c
 				document.querySelectorAll('.main-card')[2].classList.remove('moveToNewBook');
 				document.querySelector('.arrow-left').classList.remove('d-none');
 				document.querySelector('.arrow-left-back').classList.add('d-none');
-				document.querySelector('.cards-display').style.overflow = "hidden";
+				document.querySelector('.cards-display').removeAttribute("style");
 			} else {
 				for (var key of coverFormData.keys()) {
 					coverFormData.delete(key)
