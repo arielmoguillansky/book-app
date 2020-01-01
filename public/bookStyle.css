@@ -793,6 +793,14 @@ textarea {
     background-size: cover;
 }
 
+.singUpErrorMsg{
+    position: relative;
+}
+.nameErr {
+    top: -27em;
+    left: 20em;
+}
+
 @media (max-width: 920px) {
 .errorMsg, .arrow-container {
     display: none;

@@ -135,20 +135,24 @@ function handleErrors(response) {
 	return response;
 }
 
-
 const signin = document.querySelector('#newUser')
 signin.addEventListener('click', (e) => {
-
 	e.preventDefault();
 
 	fetch(postUserUrl, singInOptions())
-		.then(res => res.json().then((data) => {
-			window.localStorage.setItem('access_token', data.token);
-			token = 'Bearer ' + data.token;
-			outCard(getDashboard());
-			getUserData(token);
-			getBooksData(token);
-		}))
+		.then((res) => {
+			console.log(res)
+			if (res.status == 201) {
+				res.json().then((data) => {
+					window.localStorage.setItem('access_token', data.token);
+					token = 'Bearer ' + data.token;
+					outCard(getDashboard());
+					getUserData(token);
+					getBooksData(token);
+				})
+			}
+		}
+		)
 
 })
 
