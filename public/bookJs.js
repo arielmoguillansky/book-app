@@ -265,6 +265,11 @@ function getBooksData(token) {
 					pausedBook++
 				}
 			}
+			if (data.length == 0) {
+				document.querySelector('.grid').classList.add('new-grid');
+			} else {
+				document.querySelector('.grid').classList.remove('new-grid');
+			}
 			document.querySelector('.readed-books').textContent = readedBook;
 			document.querySelector('.paused-books').textContent = pausedBook;
 
