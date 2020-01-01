@@ -210,7 +210,7 @@ const getBooksCards = (data) => {
 			if (data[pos].readed) {
 				status = '<div class="section completed-section"><h2 class="completed-msg">Completed</h2></div>';
 			} else {
-				status = '<div class="section"><h2>Page mark:</h2><span>' + data[i].lastPageReaded + '</span></div>';
+				status = '<div class="section"><h2>Page mark:</h2><span>' + data[pos].lastPageReaded + '</span></div>';
 			}
 
 			if (data[pos].bookCover.data.length > 0) {
