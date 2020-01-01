@@ -185,10 +185,10 @@ const booksDataOptions = (token) => {
 		}
 	}
 }
-
+let imgObj = []
 const getBooksCards = (data) => {
 	let siblingDom = document.querySelector('.new-book-li');
-	let status, bookCover, buffImg;
+	let status, bookCover, base64data;
 
 	if (data.length > 0) {
 
@@ -201,7 +201,17 @@ const getBooksCards = (data) => {
 			}
 
 			if (data[i].bookCover) {
-				bookCover = '<div class="back" style="background-image:url(' + base64data + '"></div>';
+				let id = data[i]._id;
+				fetch('/books/' + id + '/bookCover', bookCoverOptions(token))
+					.then((res) => { return res.blob() }).then(blob => {
+						let reader = new FileReader();
+						reader.readAsDataURL(blob);
+						reader.onload = function () {
+							base64data = reader.result;
+							bookCover = '<div class="back" style="background-image:url(' + base64data + '"></div>';
+						}
+					})
+
 			} else {
 				bookCover = '<div class="back"><span class="no-cover c-custom-white">Book Cover</span></div></div>';
 			}
@@ -216,37 +226,43 @@ const getBooksCards = (data) => {
 				item.classList.toggle('flipped');
 			})
 		})
-	} else {
-		document.querySelector('.grid').classList.add('new-grid')
 	}
 }
 
-const getBooksCover = (data) => {
+// const getBooksCover = (data) => {
+// 	document.querySelector('.grid').classList.remove('new-grid')
+// 	if (data.length > 0) {
+// 		for (let i = 0; i < data.length; i++) {
+// 			if (data[i].bookCover) {
+// 				let id = data[i]._id;
+// 				fetch('/books/' + id + '/bookCover', bookCoverOptions(token))
+// 					.then((res) => { return res.blob() }).then(blob => {
+// 						let reader = new FileReader();
+// 						reader.readAsDataURL(blob);
+// 						reader.onload = async function () {
+// 							base64data = reader.result;
+// 							await imgObj.push[base64data]
+// 						}
+// 					})
+// 			} else {
+// 				getBooksCards(data)
+// 			}
+// 		}
+// 		// buffImg = data[i].bookCover.data;
+// 		// let base64data;
+// 		// let blob = new Blob([buffImg], { type: 'image/png' }); // pass a useful mime type here
 
-	for (let i = 0; i < data.length; i++) {
-		let id = data[i]._id;
-		fetch('/books/' + id + '/bookCover', bookCoverOptions(token))
-			.then((res) => { return res.blob() }).then(blob => {
-				let reader = new FileReader();
-				reader.readAsDataURL(blob);
-				reader.onload = async function () {
-					base64data = reader.result;
-					await getBooksCards(data, base64data)
-				}
-			})
-		// buffImg = data[i].bookCover.data;
-		// let base64data;
-		// let blob = new Blob([buffImg], { type: 'image/png' }); // pass a useful mime type here
+// 		// let reader = new FileReader();
+// 		// reader.readAsDataURL(blob);
+// 		// reader.onload = async function () {
+// 		// 	base64data = reader.result;
+// 		// 	await getBooksCards(data, base64data)
+// 		// }
+// 	} else {
+// 		document.querySelector('.grid').classList.add('new-grid')
+// 	}
 
-		// let reader = new FileReader();
-		// reader.readAsDataURL(blob);
-		// reader.onload = async function () {
-		// 	base64data = reader.result;
-		// 	await getBooksCards(data, base64data)
-		// }
-	}
-
-}
+// }
 
 function getBooksData(token) {
 	fetch(getBooksUrl, booksDataOptions(token))
@@ -265,7 +281,7 @@ function getBooksData(token) {
 			document.querySelector('.readed-books').textContent = readedBook;
 			document.querySelector('.paused-books').textContent = pausedBook;
 
-			getBooksCover(data);
+			getBooksCards(data);
 
 
 		}))
@@ -324,7 +340,6 @@ function getUserData(token) {
 	fetch(getUserProfileUrl, userDataOptions(token))
 		.then(res => res.json()
 			.then((data) => {
-				console.log('AVATAR', data)
 				document.querySelector('.user-name').textContent = data.name;
 				document.querySelector('.user-email').textContent = data.email;
 				let avatar = document.querySelector('.avatar')
