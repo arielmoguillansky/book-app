@@ -192,9 +192,19 @@ body {
 	display: flex;
 }
 
+.new-book-card .back{
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
 .no-cover{
 	font-size: 1.5em;
 	margin: auto;
+}
+
+.new-book-card .back .no-cover {
+    margin: unset;
 }
 
 .book-card .back:after, .new-book-card .back:after {
@@ -209,7 +219,7 @@ body {
   border-radius: 8px;
 }
 
-.book-card.flipped, .register-card.flipped {
+.book-card.flipped, .register-card.flipped, .new-book-card.flipped {
     -webkit-transform: rotateY( 180deg );
     -moz-transform: rotateY( 180deg );
     -o-transform: rotateY( 180deg );
@@ -255,6 +265,7 @@ p {
 	font-family: 'Zai';
 	margin: .5em 0 0 0;
     line-height: 1.5em;
+    overflow-wrap: break-word;
 }
 
 span {
@@ -306,9 +317,9 @@ hr.c-custom-white:before {
     -webkit-border-radius: 5px;
     border-radius: 5px;
     background-color: #F0EFE2;
-    position: absolute;
-    top: 114px;
-    left: 24px;
+    position: relative;
+    top: -15px;
+    left: -16px;
 }
 
 hr.c-custom-white:after {
@@ -320,9 +331,9 @@ hr.c-custom-white:after {
     -webkit-border-radius: 5px;
     border-radius: 5px;
     background-color: #F0EFE2;
-    position: absolute;
-    top: 114px;
-    right: 24px;
+    position: relative;
+    top: -15px;
+    right: -158px;
 }
 
 .register-card .front {
@@ -531,7 +542,7 @@ input:-webkit-autofill:active  {
     right: 5vw;
     visibility: hidden;
     opacity: 0;
-    animation: arrow 1s linear 3s forwards;
+    animation: arrow .5s linear 3s forwards;
 }
 
 @keyframes arrow {
@@ -569,10 +580,14 @@ input:-webkit-autofill:active  {
     transform: translateX(-100%);
 }
 
-.arrow-left {
+.arrow-left-back {
+    top:38vw;
+}
+
+.arrow-left, .arrow-left-back {
     transform: rotate(180deg) translateX(85vw);
     opacity: 0;
-    animation: leftArrow 1s ease forwards 2s;
+    animation: leftArrow .5s ease forwards 1s;
     cursor: pointer;
     z-index: 100;
 }
@@ -750,6 +765,32 @@ textarea {
 
 .paused-input {
     visibility: hidden;
+}
+
+.completed-msg {
+    font-family: 'Rumble Brave';
+    font-size: 1.2em;
+    text-align: center;
+    margin: unset;
+    opacity: 1;
+}
+
+.completed-section {
+    justify-content: center;
+}
+
+.section-title {
+    justify-content: center;
+}
+
+.cover-back {
+    background-size: cover;
+    background-position: center;
+}
+
+.book-card .back{
+    background-position: center;
+    background-size: cover;
 }
 
 @media (max-width: 920px) {

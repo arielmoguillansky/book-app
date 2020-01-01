@@ -28,7 +28,7 @@ const taskSchema = new mongoose.Schema({
 	},
 	readed: {
 		type: Boolean,
-		default: false
+		default: true
 	},
 	paused: {
 		type: Boolean,

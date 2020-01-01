@@ -6,6 +6,9 @@ const multer = require('multer');
 const sharp = require('sharp');
 
 const upload = multer({
+	limits: {
+		fileSize: 1000000
+	},
 	fileFilter(req, file, cb) {
 		if (!file.originalname.match(/\.(jpg|jpeg|png)$/)) return cb(new Error('Invalid format'));
 
@@ -40,7 +43,7 @@ router.get('/books/:id/bookCover', auth, async (req, res) => {
 		res.set('Content-type', 'application/png')
 		res.send(book.bookCover)
 	} catch (e) {
-		res.status(500).send({ error: error.message })
+		res.status(500).send({ error: e.message })
 	}
 })
 
@@ -53,12 +56,17 @@ router.delete('/books/:id/bookCover', auth, async (req, res) => {
 	res.send('Cover image deleted')
 })
 
-router.post('/books', auth, async (req, res) => {
+router.post('/books', auth, upload.single('bookCover'), async (req, res) => {
+	let buffer = ''
+	if (req.file) {
+		buffer = await sharp(req.file.buffer).resize({ width: 500, height: 500 }).png().toBuffer();
+	}
 	const book = new Book({
 		...req.body,
 		owner: req.user._id
 	});
 
+	book.bookCover = buffer;
 	try {
 		await book.save();
 		res.status(201).send(book)
@@ -68,6 +76,7 @@ router.post('/books', auth, async (req, res) => {
 })
 
 router.get('/books', auth, async (req, res) => {
+
 	const match = {}
 	const sort = {}
 
